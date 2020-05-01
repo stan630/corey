@@ -8,18 +8,30 @@
                 <p class="form-group">
                     {{ form.username.label}}<br>
                     {{ form.username }}
+                    {% for error in form.username.errors %}
+                    <span class="error-message"> {{error}}</span>
+                    {% endfor%}
                 </p>
                 <p class="form-group">
                     {{ form.email.label}}<br>
                     {{ form.email }}
+                    {% for error in form.username.errors %}
+                    <span class="error-message"> {{error}}</span>
+                    {% endfor%}
                 </p>
                 <p class="form-group">
                     {{ form.password.label}}<br>
                     {{ form.password }}
+                    {% for error in form.username.errors %}
+                    <span class="error-message"> {{error}}</span>
+                    {% endfor%}
                 </p>
                 <p class="form-group">
-                    {{ form.confirm_password.label}}
+                    {{ form.confirm_password.label}}<br>
                     {{ form.confirm_password }}
+                    {% for error in form.username.errors %}
+                    <span class="error-message"> {{error}}</span>
+                    {% endfor%}
                 </p>
                 <p>
                     {{ form.submit() }}
