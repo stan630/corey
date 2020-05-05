@@ -64,6 +64,7 @@ def login():
 
 @app.route('/logout')
 def logout():
+    form = BookForm
     logout_user()
     return redirect(url_for('home'))
 
@@ -73,15 +74,13 @@ def account():
     image_file = url_for('static', filename='profile_pics/default.jpg')
     return render_template ('account.html', title= 'Account', image_file=image_file)
 
-app.route('/book/new', methods=['GET', 'POST'])
+@app.route("/book/new", methods=['GET','POST'])
 @login_required
-def test():
+def new_book():
     form = BookForm()
     if form.validate_on_submit():
-        flash('Your book has been added to the database.', 'success')
+        flash("Your book has been added to the databse.", "success")
         return redirect(url_for('home'))
-    return render_template ('add_book.html', title= 'New Book', form=form)
+    return render_template('add_book.html', title='Add Book', form=form)
 
 
-# res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": pR5uwHeZwbc9uARNi9uQ", "isbns": "9781632168146"})
-# print(res.json())
