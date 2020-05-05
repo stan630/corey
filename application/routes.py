@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request
 from application import app, db, bcrypt
-from application.forms import RegistrationForm, LoginForm
+from application.forms import RegistrationForm, LoginForm, BookForm
 from application.models import User, Book
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -67,7 +67,21 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-@app.route('/account')
+@app.route('/account', methods=['GET','POST'])
 @login_required
 def account():
-    return render_template ('account.html', title= 'Account')
+    image_file = url_for('static', filename='profile_pics/default.jpg')
+    return render_template ('account.html', title= 'Account', image_file=image_file)
+
+app.route('/book/new', methods=['GET', 'POST'])
+@login_required
+def test():
+    form = BookForm()
+    if form.validate_on_submit():
+        flash('Your book has been added to the database.', 'success')
+        return redirect(url_for('home'))
+    return render_template ('add_book.html', title= 'New Book', form=form)
+
+
+# res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": pR5uwHeZwbc9uARNi9uQ", "isbns": "9781632168146"})
+# print(res.json())
