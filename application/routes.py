@@ -5,25 +5,11 @@ from application.models import User, Book
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-posts = [
-    {
-        'author': 'Smedley Doolittle',
-        'title': 'Blog Post 1',
-        'content': 'First post content',
-        'date_posted': 'April 20, 2018'
-    },
-    {
-        'author': 'Mia Johnson',
-        'title': 'Blog Post 2',
-        'content': 'Second post content',
-        'date_posted': 'April 21, 2018'
-    }
-]
-
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template ('home.html', posts=posts)
+    books = Book.query.all()
+    return render_template ('home.html', books=books)
 
 @app.route('/about')
 def about():
@@ -79,8 +65,10 @@ def account():
 def new_book():
     form = BookForm()
     if form.validate_on_submit():
-        flash("Your book has been added to the databse.", "success")
+        book = Book(isbn=form.isbn.data, title=form.title.data,
+        author=form.author.data, year=form.year.data)
+        db.session.add(book)
+        db.session.commit()
+        flash("Your book has been added to the database.", "success")
         return redirect(url_for('home'))
     return render_template('add_book.html', title='Add Book', form=form)
-
-
