@@ -8,7 +8,7 @@
               <a class="mr-2" href="#">{{ book.author }}</a>
               <small class="text-muted">{{ book.year }}</small>
             </div>
-            <h2><a class="article-title" href="#">{{ book.title }}</a></h2>
+            <h2><a class="article-title" href="{{ url_for('book', book_id=book.id) }}">{{ book.title }}</a></h2>
             <p class="article-content">{{ book.isbn }}</p>
           </div>
         </article>

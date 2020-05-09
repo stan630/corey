@@ -18,10 +18,10 @@ class User(db.Model, UserMixin):
 
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    isbn = db.Column(db.String(10))
-    author = db.Column(db.String(50), nullable=False)
-    title = db.Column(db.String(50), nullable=False)
-    year = db.Column(db.Integer, nullable=False)
+    isbn = db.Column(db.String(20), unique=False)
+    title = db.Column(db.String(100))
+    author = db.Column(db.String(100))
+    year = db.Column(db.Integer, unique=False)
 
     def __repr__(self):
         return f"Book('{self.title}', '{self.author}')"

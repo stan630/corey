@@ -71,4 +71,39 @@ def new_book():
         db.session.commit()
         flash("Your book has been added to the database.", "success")
         return redirect(url_for('home'))
-    return render_template('add_book.html', title='Add Book', form=form)
+    return render_template('add_book.html', title='New Book', form=form, legend='New Book')
+
+@app.route("/book/<int:book_id>")
+def book(book_id):
+    book = Book.query.get_or_404(book_id)
+    return render_template('book.html', title=book.title, book=book)
+
+@app.route("/book/<int:book_id>/update", methods=['GET','POST'])
+@login_required
+def update_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    form = BookForm()
+    if form.validate_on_submit():
+        book.title= form.title.data 
+        book.author = form.author.data
+        book.year = form.year.data
+        book.isbn = form.isbn.data
+        db.session.commit()
+        flash('Your book has been updated.', 'success')
+        return redirect(url_for('book', book_id=book.id))
+    elif request.method == 'GET':
+        form.title.data = book.title
+        form.author.data = book.author
+        form.year.data = book.year
+        form.isbn.data = book.isbn
+    return render_template('add_book.html', title='Update Book', form=form, legend='Update Book')
+
+@app.route("/book/<int:book_id>/delete", methods=['POST'])
+@login_required
+def delete_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    db.session.delete(book)
+    db.session.commit()
+    flash('Your book has been delete!', 'success')
+    return redirect(url_for('home'))
+    
