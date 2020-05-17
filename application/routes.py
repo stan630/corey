@@ -15,10 +15,6 @@ def home():
 def about():
     return render_template ('about.html',title='about')
     
-@app.route('/books')
-def books():
-    return render_template ('books.html',title='Books')
-
 @app.route('/register', methods=['GET','POST'])
 def register():
     if current_user.is_authenticated:
@@ -59,6 +55,12 @@ def logout():
 def account():
     image_file = url_for('static', filename='profile_pics/default.jpg')
     return render_template ('account.html', title= 'Account', image_file=image_file)
+
+@app.route("/books")
+@login_required
+def books():
+    booklist = Book.query.order_by("author")
+    return render_template('books.html', bookData=booklist)
 
 @app.route("/book/new", methods=['GET','POST'])
 @login_required

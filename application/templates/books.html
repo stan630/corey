@@ -1,0 +1,33 @@
+{% extends "no_sidebar.html" %}
+
+{% block content %}
+<h2>Book Offerings</h2>
+
+
+<div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col"> ISBN</th>
+                <th scope="col">Author</th>
+                <th scope="col">Title</th>
+                <th scope="col">Year</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        <!-- Construct the rest of courses here -->
+        {% for book in bookData %}
+        <tr>
+            <td scope='row'>{{ book["isbn"] }}</td>
+            <td>{{ book["author"] }}</td>
+            <td>{{ book["title"] }}</td>
+            <td>{{ book["year"] }}</td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
